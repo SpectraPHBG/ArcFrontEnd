@@ -1,0 +1,10 @@
+.rbt-input-main {
+    border-radius: 5px 0 0 5px !important;
+}
+
+
+.invalid {
+    .rbt-input-main {
+        border-color: red;
+    }
+}
