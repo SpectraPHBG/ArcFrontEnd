@@ -1,10 +1,15 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {PsuCertificatePopover} from "../Popovers/PsuCertificatePopover";
+import {MaxPsuPopover} from "../Popovers/MaxPsuPopover";
+import {PsuModularPopover} from "../Popovers/PsuModularPopover";
 
 export function PowerSupplyModal({powerSupply, show, setShow}) {
     const handleClose = () => setShow(false);
 
     if(powerSupply) {
+
+        const mappedConnectors = powerSupply['connectors'].split('\\ ').map((item, index) => <p key={index}>{item}</p>);
 
         return (
             <Modal show={show} onHide={handleClose} size="lg">
@@ -55,6 +60,7 @@ export function PowerSupplyModal({powerSupply, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Certificate:
+                            <PsuCertificatePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {powerSupply['certificate'] ? powerSupply['certificate'] : 'None'}
@@ -66,7 +72,7 @@ export function PowerSupplyModal({powerSupply, show, setShow}) {
                             Connectors:
                         </div>
                         <div className='col-12 col-lg-8'>
-                            {powerSupply['connectors']}
+                            {mappedConnectors}
                         </div>
                     </div>
                     <hr/>
@@ -82,6 +88,7 @@ export function PowerSupplyModal({powerSupply, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Max Power Supply Length:
+                            <MaxPsuPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {powerSupply['maxPsuLength']} mm
@@ -91,6 +98,7 @@ export function PowerSupplyModal({powerSupply, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Modular:
+                            <PsuModularPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {powerSupply['modular'] ? powerSupply['modular'] : "None"}
@@ -108,7 +116,7 @@ export function PowerSupplyModal({powerSupply, show, setShow}) {
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            features:
+                            Features:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {powerSupply['features']}
@@ -116,10 +124,12 @@ export function PowerSupplyModal({powerSupply, show, setShow}) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(powerSupply['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(powerSupply['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

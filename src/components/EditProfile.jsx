@@ -1,6 +1,6 @@
 import {Button, Card, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import ValidationErrors from "./ValidationErrors";
+import ErrorsDisplay from "./ErrorsDisplay";
 import {toast} from "react-toastify";
 
 export function EditProfile({user, update}) {
@@ -18,17 +18,17 @@ export function EditProfile({user, update}) {
         event.preventDefault()
         const id = user.id;
         update({id,setErrors, email,username}).then(() => {
-            toast.success('Successfully changed username/email');
+
         });
     }
 
     return(
         <>
-        <Card className="w-50 mx-auto my-5">
+        <Card className="mx-auto my-5 col-10 col-md-8 col-lg-6">
             <Card.Header>Account Information</Card.Header>
-            <ValidationErrors className="p-4" errors={errors} />
+            <ErrorsDisplay className="p-4" errors={errors} />
             <Card.Body>
-                <Form className="w-50" onSubmit={submitForm}>
+                <Form className="col-10 col-sm-8 col-xl-6" onSubmit={submitForm}>
                     <Form.Group className="mb-3">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
@@ -50,7 +50,7 @@ export function EditProfile({user, update}) {
                             onChange={event => setUsername(event.target.value)}
                         />
                     </Form.Group>
-                    <Button variant="success" type="submit">
+                    <Button variant="success" type="submit" className='rounded-0'>
                         Save
                     </Button>
                 </Form>

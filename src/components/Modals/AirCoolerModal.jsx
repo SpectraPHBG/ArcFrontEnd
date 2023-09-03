@@ -1,5 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {AirCoolerBearingPopover} from "../Popovers/AirCoolerBearingPopover";
+import {MaxCoolerPopover} from "../Popovers/MaxCoolerPopover";
 
 export function AirCoolerModal({airCooler, show, setShow}){
     const handleClose = () => setShow(false);
@@ -40,6 +42,7 @@ export function AirCoolerModal({airCooler, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Bearing:
+                            <AirCoolerBearingPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {airCooler['bearing']}
@@ -67,6 +70,7 @@ export function AirCoolerModal({airCooler, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Max Cooler Height:
+                            <MaxCoolerPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {airCooler['maxCoolerHeight']} mm
@@ -111,7 +115,7 @@ export function AirCoolerModal({airCooler, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            features:
+                            Features:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {airCooler['features'] ? airCooler['features'] : 'None'}

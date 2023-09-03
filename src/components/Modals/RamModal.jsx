@@ -1,5 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {RamLatencyPopover} from "../Popovers/RamLatencyPopover";
+import {RamEccSupportPopover} from "../Popovers/RamEccSupportPopover";
 
 export function RamModal({ram, show, setShow}){
     const handleClose = () => setShow(false);
@@ -82,6 +84,7 @@ export function RamModal({ram, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Latency:
+                            <RamLatencyPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {ram['latency']}
@@ -109,6 +112,7 @@ export function RamModal({ram, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             ECC Support:
+                            <RamEccSupportPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {ram['eccSupport'] ? "Yes" : "No"}
@@ -117,7 +121,7 @@ export function RamModal({ram, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            features:
+                            Features:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {ram['features']}
@@ -125,10 +129,12 @@ export function RamModal({ram, show, setShow}){
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(ram['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(ram['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

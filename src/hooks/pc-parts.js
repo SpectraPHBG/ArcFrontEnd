@@ -57,8 +57,32 @@ export function usePcParts() {
 
     const compatibilityCheck = async ({...props}) => {
         await csrf()
-        console.log(props)
         return axios.post('/api/compatibilityCheck', props);
+    }
+
+    const buildPC = async ({...props}) => {
+        await csrf()
+        return axios.post('/api/buildPc', props);
+    }
+
+    const savePC = async ({...props}) => {
+        await csrf()
+        return axios.post('/api/savePc', props);
+    }
+
+    const getRandomCpus = async (count, brand) => {
+        await csrf()
+        return axios.get('/api/cpus/random/'+brand+'/'+count);
+    }
+
+    const getUserPcs = async () => {
+        await csrf()
+        return axios.get('/api/getUserPcs');
+    }
+
+    const deleteSavedPc = async (id) => {
+        await csrf()
+        return axios.delete('/api/deletePc/'+id);
     }
 
     const getCpu = async (setErrors, setCpu,id) => {
@@ -77,6 +101,7 @@ export function usePcParts() {
 
     return {
         getCpus,
+        getRandomCpus: getRandomCpus,
         getGpus,
         getPcCases,
         getRams,
@@ -87,7 +112,11 @@ export function usePcParts() {
         getHardDrives,
         getSataSSDs,
         getM2SSDs,
+        getUserPcs,
         compatibilityCheck,
+        deleteSavedPc,
+        buildPC,
+        savePC,
         getCpu
     }
 }

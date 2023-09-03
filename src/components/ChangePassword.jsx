@@ -1,5 +1,5 @@
 import {Button, Card, Form} from "react-bootstrap";
-import ValidationErrors from "./ValidationErrors";
+import ErrorsDisplay from "./ErrorsDisplay";
 import {useState} from "react";
 import {toast} from "react-toastify";
 
@@ -22,11 +22,11 @@ export function ChangePassword({user, update}) {
 
     return (
         <>
-        <Card className="w-50 mx-auto my-5">
+        <Card className="mx-auto my-5 col-10 col-md-8 col-lg-6">
             <Card.Header>Change Password</Card.Header>
-            <ValidationErrors className="p-4" errors={errors} />
+            <ErrorsDisplay className="p-4" errors={errors} />
             <Card.Body>
-                <Form className="w-50" onSubmit={submitForm}>
+                <Form className="col-10 col-sm-8 col-xl-6" onSubmit={submitForm}>
                     <Form.Group className="mb-3">
                         <Form.Label>Current Password</Form.Label>
                         <Form.Control
@@ -56,7 +56,7 @@ export function ChangePassword({user, update}) {
                             onChange={event => setPassword_confirmation(event.target.value)}
                         />
                     </Form.Group>
-                    <Button variant="success" type="submit">
+                    <Button variant="success" type="submit" className='rounded-0'>
                         Save
                     </Button>
                 </Form>

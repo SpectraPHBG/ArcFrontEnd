@@ -5,8 +5,6 @@ import {Button, Form, Card} from "react-bootstrap";
 export function DeleteUserModal({onDelete, show, setShow}){
     const [current_password, setCurrent_password] = useState('')
 
-
-
     const handleClose = () => setShow(false);
 
     return (

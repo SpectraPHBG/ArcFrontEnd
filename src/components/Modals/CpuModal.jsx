@@ -1,5 +1,11 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {CpuSocketPopover} from "../Popovers/CpuSocketPopover";
+import {CpuCorePopover} from "../Popovers/CpuCorePopover";
+import {CpuThreadPopover} from "../Popovers/CpuThreadPopover";
+import {CpuTurboClockPopover} from "../Popovers/CpuTurboClockPopover";
+import {CpuCachePopover} from "../Popovers/CpuCachePopover";
+import {CpuTdpPopover} from "../Popovers/CpuTdpPopover";
 
 export function CpuModal({cpu, show, setShow}){
     const handleClose = () => setShow(false);
@@ -22,6 +28,7 @@ export function CpuModal({cpu, show, setShow}){
                         <div className='row text-center text-lg-start'>
                             <div className='col-12 col-lg-4'>
                                 P Core Turbo Clock:
+                                <CpuTurboClockPopover />
                             </div>
                             <div className='col-12 col-lg-8'>
                                 {cpu['turboClock']} GHz
@@ -40,6 +47,7 @@ export function CpuModal({cpu, show, setShow}){
                         <div className='row text-center text-lg-start'>
                             <div className='col-12 col-lg-4'>
                                 E Core Turbo Clock:
+                                <CpuTurboClockPopover />
                             </div>
                             <div className='col-12 col-lg-8'>
                                 {cpu['turboClock2']} GHz
@@ -64,6 +72,7 @@ export function CpuModal({cpu, show, setShow}){
                         <div className='row text-center text-lg-start'>
                             <div className='col-12 col-lg-4'>
                                 Turbo Clock:
+                                <CpuTurboClockPopover />
                             </div>
                             <div className='col-12 col-lg-8'>
                                 {cpu['turboClock']} GHz
@@ -81,37 +90,10 @@ export function CpuModal({cpu, show, setShow}){
                         <hr/>
                         <div className='row text-center text-lg-start'>
                             <div className='col-12 col-lg-4'>
-                                P Core Memory Type:
+                                Cpu Memory:
                             </div>
                             <div className='col-12 col-lg-8'>
-                                {cpu['memoryType']['name']} {cpu['memorySpeed']}
-                            </div>
-                        </div>
-                        <hr/>
-                        <div className='row text-center text-lg-start'>
-                            <div className='col-12 col-lg-4'>
-                                P Core Max Memory Speed:
-                            </div>
-                            <div className='col-12 col-lg-8'>
-                                {cpu['memorySpeed']} MHz
-                            </div>
-                        </div>
-                        <hr/>
-                        <div className='row text-center text-lg-start'>
-                            <div className='col-12 col-lg-4'>
-                                E Core Memory Type:
-                            </div>
-                            <div className='col-12 col-lg-8'>
-                                {cpu['memory2Type']['name']}
-                            </div>
-                        </div>
-                        <hr/>
-                        <div className='row text-center text-lg-start'>
-                            <div className='col-12 col-lg-4'>
-                                E Core Max Memory Speed:
-                            </div>
-                            <div className='col-12 col-lg-8'>
-                                {cpu['memory2Speed']} MHz
+                                {cpu['memoryType']['name']} {cpu['memorySpeed']} MHz / {cpu['memory2Type']['name']} {cpu['memory2Speed']} MHz
                             </div>
                         </div>
                     </>
@@ -123,19 +105,10 @@ export function CpuModal({cpu, show, setShow}){
                         <hr/>
                         <div className='row text-center text-lg-start'>
                             <div className='col-12 col-lg-4'>
-                                Memory Type:
+                                Cpu Memory:
                             </div>
                             <div className='col-12 col-lg-8'>
-                                {cpu['memoryType']['name']}
-                            </div>
-                        </div>
-                        <hr/>
-                        <div className='row text-center text-lg-start'>
-                            <div className='col-12 col-lg-4'>
-                                Max Memory Speed:
-                            </div>
-                            <div className='col-12 col-lg-8'>
-                                {cpu['memorySpeed']} MHz
+                                {cpu['memoryType']['name']} {cpu['memorySpeed']} MHz
                             </div>
                         </div>
                     </>
@@ -164,6 +137,15 @@ export function CpuModal({cpu, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
+                            Series:
+                        </div>
+                        <div className='col-12 col-lg-8'>
+                            {cpu['series']}
+                        </div>
+                    </div>
+                    <hr/>
+                    <div className='row text-center text-lg-start'>
+                        <div className='col-12 col-lg-4'>
                             Name:
                         </div>
                         <div className='col-12 col-lg-8'>
@@ -174,6 +156,7 @@ export function CpuModal({cpu, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Socket:
+                            <CpuSocketPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {cpu['socket']['name']}
@@ -183,6 +166,7 @@ export function CpuModal({cpu, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Cores:
+                            <CpuCorePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {cpu['cores']}
@@ -192,6 +176,7 @@ export function CpuModal({cpu, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Threads:
+                            <CpuThreadPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {cpu['threads']}
@@ -212,6 +197,7 @@ export function CpuModal({cpu, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Cpu Cache:
+                            <CpuCachePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {cpu['caches']}
@@ -221,9 +207,19 @@ export function CpuModal({cpu, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Thermal Design Power:
+                            <CpuTdpPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {cpu['tdp']} W
+                        </div>
+                    </div>
+                    <hr/>
+                    <div className='row text-center text-lg-start'>
+                        <div className='col-12 col-lg-4'>
+                            PCIe Gen:
+                        </div>
+                        <div className='col-12 col-lg-8'>
+                            PCI Express {cpu['pcieVersion']}
                         </div>
                     </div>
                     <hr/>
@@ -264,10 +260,12 @@ export function CpuModal({cpu, show, setShow}){
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(cpu['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(cpu['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

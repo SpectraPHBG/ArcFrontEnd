@@ -1,5 +1,8 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {StorageInterfacePopover} from "../Popovers/StorageInterfacePopover";
+import {StorageFormFactorPopover} from "../Popovers/StorageFormFactorPopover";
+import {SsdMtbfPopover} from "../Popovers/SsdMtbfPopover";
 
 export function SataSSDModal({sataSSD, show, setShow}) {
     const handleClose = () => setShow(false);
@@ -46,6 +49,7 @@ export function SataSSDModal({sataSSD, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Storage Interface:
+                            <StorageInterfacePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {sataSSD['storageInterface']['name']}
@@ -55,6 +59,7 @@ export function SataSSDModal({sataSSD, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Form Factor:
+                            <StorageFormFactorPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {sataSSD['formFactor']}"
@@ -82,6 +87,7 @@ export function SataSSDModal({sataSSD, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             MTBF:
+                            <SsdMtbfPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {sataSSD['mtbf']} hours
@@ -99,7 +105,7 @@ export function SataSSDModal({sataSSD, show, setShow}) {
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            features:
+                            Features:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {sataSSD['features'] ? sataSSD['features'] : 'None'}
@@ -107,10 +113,12 @@ export function SataSSDModal({sataSSD, show, setShow}) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(sataSSD['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(sataSSD['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

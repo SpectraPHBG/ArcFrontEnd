@@ -1,5 +1,8 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {StorageInterfacePopover} from "../Popovers/StorageInterfacePopover";
+import {StorageFormFactorPopover} from "../Popovers/StorageFormFactorPopover";
+import {SsdMtbfPopover} from "../Popovers/SsdMtbfPopover";
 
 export function M2SSDModal({m2SSD, show, setShow}){
     const handleClose = () => setShow(false);
@@ -46,6 +49,7 @@ export function M2SSDModal({m2SSD, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Storage Interface:
+                            <StorageInterfacePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {m2SSD['storageInterface']['name']}
@@ -55,6 +59,7 @@ export function M2SSDModal({m2SSD, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Form Factor:
+                            <StorageFormFactorPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {m2SSD['formFactor']['name']}
@@ -82,6 +87,7 @@ export function M2SSDModal({m2SSD, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             MTBF:
+                            <SsdMtbfPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {m2SSD['mtbf'] !== 0 ? m2SSD['mtbf'] + " hours" : "Unknown"}
@@ -99,7 +105,7 @@ export function M2SSDModal({m2SSD, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            features:
+                            Features:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {m2SSD['features'] ? m2SSD['features'] : 'None'}
@@ -107,10 +113,12 @@ export function M2SSDModal({m2SSD, show, setShow}){
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(m2SSD['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(m2SSD['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

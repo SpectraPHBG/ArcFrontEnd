@@ -1,5 +1,10 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {FormFactorPopover} from "../Popovers/FormFactorPopover";
+import {CpuSocketPopover} from "../Popovers/CpuSocketPopover";
+import {MaxPsuPopover} from "../Popovers/MaxPsuPopover";
+import {MaxCoolerPopover} from "../Popovers/MaxCoolerPopover";
+import {MaxGpuPopover} from "../Popovers/MaxGpuPopover";
 
 export function PcCaseModal({pcCase, show, setShow}) {
     const handleClose = () => setShow(false);
@@ -39,7 +44,10 @@ export function PcCaseModal({pcCase, show, setShow}) {
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            Form Factor:
+                            <div>
+                                Form Factor:
+                                <FormFactorPopover />
+                            </div>
                         </div>
                         <div className='col-12 col-lg-8'>
                             {pcCase['formFactor']['name']}
@@ -121,6 +129,7 @@ export function PcCaseModal({pcCase, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Max PSU Length:
+                            <MaxPsuPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {pcCase['maxPsuLength']} mm
@@ -130,6 +139,7 @@ export function PcCaseModal({pcCase, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Max Cooler Height:
+                            <MaxCoolerPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {pcCase['maxCoolerHeight']} mm
@@ -139,6 +149,7 @@ export function PcCaseModal({pcCase, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Max Gpu Length:
+                            <MaxGpuPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {pcCase['maxGpuLength']} mm
@@ -164,10 +175,12 @@ export function PcCaseModal({pcCase, show, setShow}) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(pcCase['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(pcCase['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

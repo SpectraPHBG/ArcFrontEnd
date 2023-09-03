@@ -1,10 +1,19 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {MotherboardFormFactorPopover} from "../Popovers/MotherboardFormFactorPopover";
+import {MotherboardSocketPopover} from "../Popovers/MotherboardSocketPopover";
+import {MotherboardChipsetPopover} from "../Popovers/MotherboardChipsetPopover";
+import {MotherboardDualChannelPopover} from "../Popovers/MotherboardDualChannelPopover";
+import {MotherboardECCPopover} from "../Popovers/MotherboardECCPopover";
+import {MotherboardBufferPopover} from "../Popovers/MotherboardBufferPopover";
+import {MotherboardExpansionSlotsPopover} from "../Popovers/MotherboardExpansionSlotsPopover";
 
 export function MotherboardModal({motherboard, show, setShow}){
     const handleClose = () => setShow(false);
 
     if(motherboard) {
+        const mappedConnectors = motherboard['ioConnectors'].split('\\ ').map((item, index) => <p key={index}>{item}</p>);
+
         const mapExpansionSlots = (expansionSlots) => {
             return expansionSlots.map((expansionSlot, index) => <p key={index}>{expansionSlot['amount']} x {expansionSlot['name']}</p>);
         }
@@ -35,6 +44,17 @@ export function MotherboardModal({motherboard, show, setShow}){
                     }
                 }
 
+            );
+        }
+
+        const mapSupportedFrequencies = (supportedFrequencies) => {
+            return supportedFrequencies.map((item, index) =>
+                <div key={index}>
+                    {item['name']
+                        ? <p className='fw-bold'>{item['name']}</p>
+                        : ""}
+                    <p>{item['frequencies']} MHz</p>
+                </div>
             );
         }
 
@@ -69,6 +89,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Form Factor:
+                            <MotherboardFormFactorPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {motherboard['formFactor']['name']}
@@ -78,6 +99,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Socket:
+                            <MotherboardSocketPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {motherboard['socket']['name']}
@@ -87,6 +109,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Chipset:
+                            <MotherboardChipsetPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {motherboard['chipset']['name']}
@@ -107,7 +130,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                             Supported Memory Speeds:
                         </div>
                         <div className='col-12 col-lg-8'>
-                            {motherboard['memoriesSupport']} MHz
+                            {mapSupportedFrequencies(motherboard['memoriesSupport'])}
                         </div>
                     </div>
                     <hr/>
@@ -132,6 +155,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Dual Channel Support:
+                            <MotherboardDualChannelPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {motherboard['dualChSupport'] ? 'Yes' : 'No'}
@@ -141,6 +165,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             ECC Support:
+                            <MotherboardECCPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {motherboard['eccSupport'] ? 'Yes' : 'No'}
@@ -150,6 +175,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Buffer Support:
+                            <MotherboardBufferPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {motherboard['bufferSupport'] ? 'Yes' : 'No'}
@@ -194,6 +220,15 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
+                            IO Connectors:
+                        </div>
+                        <div className='col-12 col-lg-8'>
+                            {mappedConnectors}
+                        </div>
+                    </div>
+                    <hr/>
+                    <div className='row text-center text-lg-start'>
+                        <div className='col-12 col-lg-4'>
                             USB Ports:
                         </div>
                         <div className='col-12 col-lg-8'>
@@ -203,7 +238,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            LED Support:
+                            Motherboard LED Lighting:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {motherboard['led'] ? 'Yes' : 'No'}
@@ -213,6 +248,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Expansion Slots:
+                            <MotherboardExpansionSlotsPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {mapExpansionSlots(motherboard['expansionSlots'])}
@@ -230,7 +266,7 @@ export function MotherboardModal({motherboard, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            features:
+                            Features:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {motherboard['features']}
@@ -238,10 +274,12 @@ export function MotherboardModal({motherboard, show, setShow}){
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(motherboard['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(motherboard['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

@@ -1,7 +1,7 @@
 import ApplicationLogo from 'components/ApplicationLogo'
 import AuthCard from 'components/AuthCard'
 import AuthSessionStatus from 'components/AuthSessionStatus'
-import ValidationErrors from 'components/ValidationErrors'
+import ErrorsDisplay from 'components/ErrorsDisplay'
 import Button from 'components/Button'
 import GuestLayout from 'components/Layouts/GuestLayout'
 import Input from 'components/Input'
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
         {/* Session Status */}
         <AuthSessionStatus className="mb-4" status={status} />
         {/* Validation Errors */}
-        <ValidationErrors className="mb-4" errors={errors} />
+        <ErrorsDisplay className="mb-4" errors={errors} />
         <form onSubmit={submitForm}>
           {/* Email Address */}
           <div>

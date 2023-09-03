@@ -1,5 +1,8 @@
 .configurator-body {
-  background-color: #2779e2;
+  background-image: url('../../public/config-background.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .hide-caret{
@@ -13,4 +16,19 @@
 }
 .rbt-close-content {
   visibility: hidden;
+}
+
+.card {
+  border-radius: 0;
+  background-color: rgba(245, 245, 245, 0.9);
+}
+.card-header, .card-footer { opacity: 1}
+
+.responsive-part-name {
+  font-size: 24px;
+}
+@media (min-width: 992px) {
+  .responsive-part-name {
+    font-size: 16px;
+  }
 }

@@ -4,10 +4,11 @@
     margin: 0;
 }
 .top-greeter{
-    background-image:url("/public/greeter-background.jpg");
+    background-image:url("/public/greeter-background-mobile.jpg");
     min-width: calc(100vw - 17px);
-    height: 530px;
-    background-size: contain;
+    height: auto;
+    max-height: 530px;
+    background-size: cover;
     background-repeat: no-repeat;
 
 }
@@ -16,20 +17,20 @@ body{
     overflow-x: hidden;
 }
 
-@media (max-width: 649px ) {
+.fixed-height-card{
+    min-height: calc(100vh - 58px - 300px) !important;
+}
+
+@media (min-width: 993px ) {
     .top-greeter{
-        height: auto;
+        background-image:url("/public/greeter-background.jpg");
+        background-size: contain;
+        height: 33vw;
     }
 }
 
-@media (max-width: 1024px ) {
-    .top-greeter{
-        background: #3f0000;
-        height: auto;
-    }
-}
 
-@media (min-width: 1600px ) {
+@media (min-width: 1400px ) {
     .top-greeter{
         background-size: cover;
     }

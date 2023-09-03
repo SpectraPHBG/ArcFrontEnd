@@ -21,6 +21,9 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.5.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -39,7 +42,9 @@
     "react-router": "^6.8.1",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.0",
+    "react-slick": "^0.29.0",
     "react-toastify": "^9.1.2",
+    "slick-carousel": "^1.8.1",
     "swr": "^1.2.2",
     "web-vitals": "^2.1.4"
   },

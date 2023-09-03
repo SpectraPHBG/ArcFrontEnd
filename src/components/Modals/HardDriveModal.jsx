@@ -1,5 +1,8 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {StorageInterfacePopover} from "../Popovers/StorageInterfacePopover";
+import {StorageFormFactorPopover} from "../Popovers/StorageFormFactorPopover";
+import {HddCachePopover} from "../Popovers/HddCachePopover";
 
 export function HardDriveModal({hardDrive, show, setShow}){
     const handleClose = () => setShow(false);
@@ -46,6 +49,7 @@ export function HardDriveModal({hardDrive, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Storage Interface:
+                            <StorageInterfacePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {hardDrive['storageInterface']['name']}
@@ -55,6 +59,7 @@ export function HardDriveModal({hardDrive, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Form Factor:
+                            <StorageFormFactorPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {hardDrive['formFactor']}"
@@ -73,6 +78,7 @@ export function HardDriveModal({hardDrive, show, setShow}){
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Cache:
+                            <HddCachePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {hardDrive['cache']} MB
@@ -81,7 +87,7 @@ export function HardDriveModal({hardDrive, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            features:
+                            Features:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {hardDrive['features']}
@@ -89,10 +95,12 @@ export function HardDriveModal({hardDrive, show, setShow}){
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(hardDrive['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(hardDrive['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

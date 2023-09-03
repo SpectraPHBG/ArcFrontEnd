@@ -1,5 +1,5 @@
 import AuthSessionStatus from 'components/AuthSessionStatus'
-import ValidationErrors from 'components/ValidationErrors'
+import ErrorsDisplay from 'components/ErrorsDisplay'
 import { useAuth } from 'hooks/auth'
 import { useState } from 'react'
 import {NavLink} from 'react-router-dom';
@@ -15,7 +15,7 @@ const Login = () => {
 
   const { login } = useAuth({
     middleware: 'guest',
-    redirectIfAuthenticated: '/profile'
+    redirectIfAuthenticated: '/'
   })
 
   const [email, setEmail] = useState('')
@@ -42,7 +42,7 @@ const Login = () => {
               {/* Session Status */}
               <AuthSessionStatus className="mb-4" status={status} />
               {/* Validation Errors */}
-              <ValidationErrors className="mb-4" errors={errors} />
+              <ErrorsDisplay className="mb-4" errors={errors} />
             <MDBInput wrapperClass='mb-4'
                       label='Email address'
                       value={email}
@@ -77,7 +77,7 @@ const Login = () => {
             </div>
 
             <div className='text-center text-md-start mt-4 pt-2'>
-              <Button type="submit" size="lg">Sign In</Button>
+              <Button type="submit" size="lg" className='rounded-0'>Sign In</Button>
               <p className="small fw-bold mt-2 pt-1 mb-2">Don't have an account?{' '}
                 <NavLink
                     to="/register"

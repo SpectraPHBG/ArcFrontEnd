@@ -1,4 +1,4 @@
-import ValidationErrors from 'components/ValidationErrors'
+import ErrorsDisplay from 'components/ErrorsDisplay'
 import { useAuth } from 'hooks/auth'
 import { useState } from 'react'
 import {NavLink} from 'react-router-dom';
@@ -9,7 +9,7 @@ import {Button} from "react-bootstrap";
 const Register = () => {
   const { register } = useAuth({
     middleware: 'guest',
-    redirectIfAuthenticated: '/profile'
+    redirectIfAuthenticated: '/'
   })
 
   const [username, setUsername] = useState('')
@@ -35,7 +35,7 @@ const Register = () => {
             <form onSubmit={submitForm}>
               <h3 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>Create your account</h3>
               {/* Validation Errors */}
-              <ValidationErrors className="mb-4" errors={errors} />
+              <ErrorsDisplay className="mb-4" errors={errors} />
               <MDBInput wrapperClass='mb-4'
                         label='Username'
                         value={username}
@@ -75,7 +75,7 @@ const Register = () => {
                         size="lg"/>
 
               <div className='text-center text-md-start mt-4 pt-2'>
-                <Button type="submit" size="lg">Sign Up</Button>
+                <Button type="submit" size="lg" className='rounded-0'>Sign Up</Button>
                 <p className="small fw-bold mt-2 pt-1 mb-2">Already have an account?{' '}
                   <NavLink
                       to="/login"

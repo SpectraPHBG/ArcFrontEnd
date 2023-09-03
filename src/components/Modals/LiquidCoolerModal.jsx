@@ -102,19 +102,10 @@ export function LiquidCoolerModal({liquidCooler, show, setShow}){
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            Pump Consumption:
-                        </div>
-                        <div className='col-12 col-lg-8'>
-                            {liquidCooler['pumpConsumption']} W
-                        </div>
-                    </div>
-                    <hr/>
-                    <div className='row text-center text-lg-start'>
-                        <div className='col-12 col-lg-4'>
                             Pump Noise:
                         </div>
                         <div className='col-12 col-lg-8'>
-                            {liquidCooler['pumpNoise']} dBA
+                            {liquidCooler['pumpNoise'] > 0 ? liquidCooler['pumpNoise'] + ' dBA' : 'Not Provided'}
                         </div>
                     </div>
                     <hr/>
@@ -155,10 +146,12 @@ export function LiquidCoolerModal({liquidCooler, show, setShow}){
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(liquidCooler['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(liquidCooler['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

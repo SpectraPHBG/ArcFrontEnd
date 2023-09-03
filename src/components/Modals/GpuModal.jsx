@@ -1,8 +1,27 @@
 import Modal from "react-bootstrap/Modal";
 import {Button, Image} from "react-bootstrap";
+import {MaxGpuPopover} from "../Popovers/MaxGpuPopover";
+import {GpuExpansionSlotPopover} from "../Popovers/GpuExpansionSlotPopover";
+import {GpuVramPopover} from "../Popovers/GpuVramPopover";
+import {GpuMemoryInterfacePopover} from "../Popovers/GpuMemoryInterfacePopover";
+import {GpuTdpPopover} from "../Popovers/GpuTdpPopover";
+import {GpuRecommendedWattagePopover} from "../Popovers/GpuRecommendedWattagePopover";
 
 export function GpuModal({gpu, show, setShow}) {
     const handleClose = () => setShow(false);
+
+    const getGpuConnectors = () => {
+      if(!gpu['powerConnector']){
+          return "None";
+      }
+      else if(gpu['powerConnector'].includes(" + ")){
+          const differentConnectors = gpu['powerConnector'].split(" + ");
+          return differentConnectors[0] + " pin + " + differentConnectors[1] + ' pin';
+      }
+      else {
+          return gpu['powerConnector'] + " pin";
+      }
+    };
 
     if(gpu) {
 
@@ -37,6 +56,7 @@ export function GpuModal({gpu, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Expansion Slot:
+                            <GpuExpansionSlotPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {gpu['expansionSlot']['name']}
@@ -45,16 +65,35 @@ export function GpuModal({gpu, show, setShow}) {
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            Gpu Clock Speed:
+                            Core Clock:
                         </div>
                         <div className='col-12 col-lg-8'>
-                            {gpu['clockSpeeds']}
+                            {gpu['coreClock'] ? gpu['coreClock'] + " MHz" : "Missing"}
+                        </div>
+                    </div>
+                    <hr/>
+                    <div className='row text-center text-lg-start'>
+                        <div className='col-12 col-lg-4'>
+                            Game Clock:
+                        </div>
+                        <div className='col-12 col-lg-8'>
+                            {gpu['gameClock'] ? gpu['gameClock'] + " MHz" : "Missing"}
+                        </div>
+                    </div>
+                    <hr/>
+                    <div className='row text-center text-lg-start'>
+                        <div className='col-12 col-lg-4'>
+                            Boost Clock:
+                        </div>
+                        <div className='col-12 col-lg-8'>
+                            {gpu['boostClock'] ? gpu['boostClock'] + " MHz" : "Missing"}
                         </div>
                     </div>
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             VRAM:
+                            <GpuVramPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {gpu['vramType']['name']} {gpu['vram']}GB
@@ -64,9 +103,19 @@ export function GpuModal({gpu, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Memory Interface:
+                            <GpuMemoryInterfacePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {gpu['memoryBus']}-Bit
+                        </div>
+                    </div>
+                    <hr/>
+                    <div className='row text-center text-lg-start'>
+                        <div className='col-12 col-lg-4'>
+                            Memory Clock:
+                        </div>
+                        <div className='col-12 col-lg-8'>
+                            {gpu['memoryClock'] ? gpu['memoryClock'] + " Gbps" : "Missing"}
                         </div>
                     </div>
                     <hr/>
@@ -93,7 +142,7 @@ export function GpuModal({gpu, show, setShow}) {
                             Power Connector:
                         </div>
                         <div className='col-12 col-lg-8'>
-                            {gpu['powerConnector'] ? gpu['powerConnector'] : "None"}
+                            {getGpuConnectors()}
                         </div>
                     </div>
                     <hr/>
@@ -118,6 +167,7 @@ export function GpuModal({gpu, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Thermal Design Power:
+                            <GpuTdpPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {gpu['tdp']} W
@@ -127,6 +177,7 @@ export function GpuModal({gpu, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Recommended Wattage:
+                            <GpuRecommendedWattagePopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {gpu['recommendedWattage']} W
@@ -136,6 +187,7 @@ export function GpuModal({gpu, show, setShow}) {
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
                             Max Gpu Length:
+                            <MaxGpuPopover />
                         </div>
                         <div className='col-12 col-lg-8'>
                             {gpu['maxGpuLength']} mm
@@ -153,7 +205,7 @@ export function GpuModal({gpu, show, setShow}) {
                     <hr/>
                     <div className='row text-center text-lg-start'>
                         <div className='col-12 col-lg-4'>
-                            features:
+                            Features:
                         </div>
                         <div className='col-12 col-lg-8'>
                             {gpu['features']}
@@ -161,10 +213,12 @@ export function GpuModal({gpu, show, setShow}) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => {window.open(gpu['officialLink'])}}>Official Website</Button>
-                    <Button variant="danger" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <div className='w-100 text-center'>
+                        <Button className='rounded-0 me-2' onClick={() => {window.open(gpu['officialLink'])}}>Official Website</Button>
+                        <Button className='rounded-0' variant="danger" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </div>
                 </Modal.Footer>
             </Modal>
         );

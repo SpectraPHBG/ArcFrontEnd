@@ -4,14 +4,27 @@ import {useAuth} from "../hooks/auth";
 import {ChangePassword} from "../components/ChangePassword";
 import '../css/profile.scss'
 import {DeleteAccount} from "../components/DeleteAccount";
-import {useEffect} from "react";
+import Container from "react-bootstrap/Container";
+import {VerifyEmail} from "../components/VerifyEmail";
 
 export function Profile() {
-    const {user, update, deleteUser} = useAuth({middleware: 'auth'});
+    const {update, deleteUser} = useAuth({middleware: 'auth'});
+    const {user} = useAuth();
 
-    useEffect(()=> {
-        localStorage.setItem('loggedUser',user);
-    },[])
+    const renderUserNotVerified = () => {
+        if(!user['email_verified_at']){
+            return (
+            <Container className='container-fluid bg-danger mw-100 text-center text-light fw-bold'>
+                <p className='py-2'>Email is not verified! Please check your email for verification! {user['emailVerified'] ? "Verified" : "Not Verified"}</p>
+            </Container>
+            );
+        }
+        else{
+            return (
+                <span></span>
+            )
+        }
+    }
 
     return (
         <div>
@@ -20,12 +33,15 @@ export function Profile() {
                     <MDBNavbarBrand className="mx-auto fs-4">Account Profile</MDBNavbarBrand>
                 </MDBContainer>
             </MDBNavbar>
+            {renderUserNotVerified()}
             <div className='m-5'>
+                <VerifyEmail user={user} />
                 <EditProfile user={user} update={update}/>
-                <ChangePassword user={user} update={update} />
+                <ChangePassword user={user} update={update}/>
                 <DeleteAccount user={user} deleteUser={deleteUser}/>
             </div>
         </div>
 
     )
+
 }
