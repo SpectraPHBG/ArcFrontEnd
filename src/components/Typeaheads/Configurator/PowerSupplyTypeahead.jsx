@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {Typeahead} from "react-bootstrap-typeahead";
 import {PowerSupplyModal} from "../../Modals/PowerSupplyModal";
 import {toast} from "react-toastify";
+import {Image} from "react-bootstrap";
 
 export function PowerSupplyTypeahead({className = '', rig, setRig, setErrors}) {
     const Typeahead = require('react-bootstrap-typeahead').Typeahead; // CommonJS
@@ -19,16 +20,42 @@ export function PowerSupplyTypeahead({className = '', rig, setRig, setErrors}) {
     const renderPowerSupplyModalTrigger = () => {
         if(selectedPowerSupply[0]){
             return (
-                <Link className='btn btn-primary rounded-0 rounded-end px-3' onClick={(event) =>{
+                <Link className='btn btn-primary rounded-0 rounded-end px-3 d-flex custom-button align-items-center align-self-center text-center' onClick={(event) =>{
                     event.preventDefault();
                     setShowPowerSupplyDetails(true);}
-                }>?</Link>
+                }>Specs</Link>
             )
         }
         else {
             return (
-                <Link className='btn btn-primary disabled rounded-0 rounded-end px-3' onClick={(event) => event.preventDefault()}>?</Link>
+                <Link className='btn btn-primary disabled rounded-0 rounded-end px-3 d-flex custom-button align-items-center custom-button align-self-center' onClick={(event) => event.preventDefault()}>Specs</Link>
             )
+        }
+    }
+
+    const renderOption = (option, props, index) => (
+        <div key={option.id} className="text-wrap">
+            {option.name}
+        </div>
+    );
+
+    const renderPowerSupplyImage = () => {
+
+        if (selectedPowerSupply[0]) {
+            return (
+                <div className='col-1 configurator-icon bg-white me-1 p-1 border border-1 d-flex align-items-center'>
+                    <Image className="w-100"
+                           src={require("../../../images" + selectedPowerSupply[0]["imageLink"])}
+                           alt="No image found."/>
+                </div>
+            );
+        } else {
+            return (
+                <div className='col-1 configurator-icon bg-white me-1 p-1 border border-1 d-flex align-items-center'>
+                    <Image className="w-100" src={require("../../../images/icons/ram-icon.png")}
+                           alt="No image found."/>
+                </div>
+            );
         }
     }
 
@@ -146,12 +173,14 @@ export function PowerSupplyTypeahead({className = '', rig, setRig, setErrors}) {
 
     return (
         <span className='d-flex'>
+            {renderPowerSupplyImage()}
             <Typeahead
                 className={'w-100 ' + className}
                 id="psu-selection"
                 clearButton
                 labelKey="name"
                 onChange={onPowerSupplyChange}
+                renderMenuItemChildren={renderOption}
                 options={filteredPowerSupplies}
                 placeholder="Choose a Power Supply..."
                 selected={selectedPowerSupply}

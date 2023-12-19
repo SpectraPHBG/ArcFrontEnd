@@ -1,6 +1,12 @@
 .rbt-input-main {
     border-radius: 5px 0 0 5px !important;
+    height: 50px;
+    align-items: center;
     //border-radius: 0 !important;
+}
+
+.rbt-aux{
+    padding-top: 5px;
 }
 
 .full-rounded .rbt-input-main {

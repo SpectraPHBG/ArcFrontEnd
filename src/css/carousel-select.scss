@@ -1,0 +1,25 @@
+.carousel-select {
+  width: 100%;
+  margin: 0 auto;
+
+  .slick-next:before, .slick-prev:before, .slick-prev:after, .slick-next:after {
+    color: black;
+  }
+
+  .carousel-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 10px;
+    img {
+      max-width: 100%;
+      border: 1px solid transparent;
+      height: auto;
+    }
+    &.selected img{
+      border-color: blue; /* You can change the border color for the selected option */
+    }
+  }
+}

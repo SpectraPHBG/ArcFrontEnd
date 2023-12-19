@@ -5,6 +5,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import '../../../css/pc-part-input-styles.scss'
 import {toast} from "react-toastify";
+import {Image} from "react-bootstrap";
 
 export function CpuTypeahead({className = '', rig, setRig, setErrors}){
     const Typeahead = require('react-bootstrap-typeahead').Typeahead; // CommonJS
@@ -18,16 +19,42 @@ export function CpuTypeahead({className = '', rig, setRig, setErrors}){
     const renderCpuModalTrigger = () => {
         if(selectedCpu[0]){
             return (
-                <Link className='btn btn-primary rounded-0 rounded-end px-3' onClick={(event) =>{
+                <Link className='btn btn-primary rounded-0 rounded-end px-3 d-flex custom-button align-items-center align-self-center text-center' onClick={(event) =>{
                     event.preventDefault();
                     setShowCpuDetails(true);}
-                }>?</Link>
+                }>Specs</Link>
             )
         }
         else {
             return (
-                <Link className='btn btn-primary disabled rounded-0 rounded-end px-3' onClick={(event) => event.preventDefault()}>?</Link>
+                <Link className='btn btn-primary disabled rounded-0 rounded-end px-3 d-flex custom-button align-items-center custom-button align-self-center' onClick={(event) => event.preventDefault()}>Specs</Link>
             )
+        }
+    }
+
+    const renderOption = (option, props, index) => (
+        <div key={option.id} className="text-wrap">
+            {option.name}
+        </div>
+    );
+
+    const renderCPUImage = () => {
+
+        if (selectedCpu[0]) {
+            return (
+                <div className='col-1 configurator-icon bg-white me-1 p-1 border border-1 d-flex align-items-center'>
+                    <Image className="w-100"
+                           src={require("../../../images" + selectedCpu[0]["imageLink"])}
+                           alt="No image found."/>
+                </div>
+            );
+        } else {
+            return (
+                <div className='col-1 configurator-icon bg-white me-1 p-1 border border-1 d-flex align-items-center'>
+                    <Image className="w-100" src={require("../../../images/icons/cpu-icon.png")}
+                           alt="No image found."/>
+                </div>
+            );
         }
     }
 
@@ -173,6 +200,7 @@ export function CpuTypeahead({className = '', rig, setRig, setErrors}){
 
     return (
         <span className='d-flex'>
+            {renderCPUImage()}
             <Typeahead
                 className={'w-100 ' + className}
                 id="Cpu-selection"
@@ -180,6 +208,7 @@ export function CpuTypeahead({className = '', rig, setRig, setErrors}){
                 clearButton
                 labelKey="name"
                 onChange={onCpuChange}
+                renderMenuItemChildren={renderOption}
                 options={cpus}
                 placeholder="Choose a CPU..."
                 selected={selectedCpu}

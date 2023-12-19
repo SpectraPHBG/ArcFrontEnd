@@ -18,15 +18,15 @@ export function PcCaseTypeahead({className = '', rig, setRig, setErrors}) {
     const renderPcCaseModalTrigger = () => {
         if(selectedPcCase[0]){
             return (
-                <Link className='btn btn-primary rounded-0 rounded-end px-3 py-1' onClick={(event) =>{
+                <Link className='btn btn-primary rounded-0 rounded-end px-3 d-flex custom-button align-items-center align-self-center text-center' onClick={(event) =>{
                     event.preventDefault();
                     setShowPcCaseDetails(true);}
-                }>?</Link>
+                }>Specs</Link>
             )
         }
         else {
             return (
-                <Link className='btn btn-primary disabled rounded-0 rounded-end px-3' onClick={(event) => event.preventDefault()}>?</Link>
+                <Link className='btn btn-primary disabled rounded-0 rounded-end px-3 d-flex custom-button align-items-center custom-button align-self-center' onClick={(event) => event.preventDefault()}>Specs</Link>
             )
         }
     }

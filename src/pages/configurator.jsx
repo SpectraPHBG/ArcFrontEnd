@@ -1,6 +1,6 @@
 import {
     MDBCard,
-    MDBCardBody,
+    MDBCardBody, MDBCardHeader,
     MDBCol,
     MDBContainer,
     MDBRow,
@@ -24,6 +24,7 @@ import ErrorsDisplay from "../components/ErrorsDisplay";
 import {toast} from "react-toastify";
 import {usePcParts} from "../hooks/pc-parts";
 import {useLocation, useNavigate} from "react-router";
+import {CaseCarouselSelect} from "../components/CaseCarouselSelect";
 
 export function Configurator() {
     const {state} = useLocation();
@@ -55,8 +56,9 @@ export function Configurator() {
     const [airCoolerValidCSS, setAirCoolerValidCSS] = useState('');
     const [liquidCoolerValidCSS, setLiquidCoolerValidCSS] = useState('');
 
-    const [errors, setErrors] = useState([])
-    const [compatibilityErrors, setCompatibilityErrors] = useState([])
+    const [errors, setErrors] = useState([]);
+    const [compatibilityErrors, setCompatibilityErrors] = useState([]);
+    const [rewrite, setRewrite] = useState(true);
 
     const [ramComponentsCount, setRamComponentsCount] = useState(1);
     const [hddComponentsCount, setHddComponentsCount] = useState(1);
@@ -138,7 +140,7 @@ export function Configurator() {
     const renderRamComponents = () => {
         return Array(ramComponentsCount).fill(true).map((_, i) =>
             <div className='py-1' key={i}>
-                <RamTypeahead className={ramValidCSS} id={i} rig={rig} setRig={setRig} setErrors={setCompatibilityErrors}/>
+                <RamTypeahead className={ramValidCSS} id={i} rig={rig} setRig={setRig} setErrors={setCompatibilityErrors} rewrite={rewrite} setRewrite={setRewrite}/>
             </div>);
     }
 
@@ -163,7 +165,7 @@ export function Configurator() {
     const renderHddComponents = () => {
         return Array(hddComponentsCount).fill(true).map((_, i) =>
             <div className='py-1' key={i}>
-                <HardDriveTypeahead id={i} rig={rig} setRig={setRig} setErrors={setCompatibilityErrors}/>
+                <HardDriveTypeahead id={i} rig={rig} setRig={setRig} setErrors={setCompatibilityErrors} rewrite={rewrite} setRewrite={setRewrite}/>
             </div>);
     }
 
@@ -188,7 +190,7 @@ export function Configurator() {
     const renderSataSSDComponents = () => {
         return Array(sataSSDComponentsCount).fill(true).map((_, i) =>
             <div className='py-1' key={i}>
-                <SataSSDTypeahead rig={rig} id={i} setRig={setRig} setErrors={setCompatibilityErrors}/>
+                <SataSSDTypeahead rig={rig} id={i} setRig={setRig} setErrors={setCompatibilityErrors} rewrite={rewrite} setRewrite={setRewrite}/>
             </div>);
     }
 
@@ -213,7 +215,7 @@ export function Configurator() {
     const renderM2SSDComponents = () => {
         return Array(m2SSDComponentsCount).fill(true).map((_, i) =>
             <div className='py-1' key={i}>
-                <M2SSDTypeahead rig={rig} id={i} setRig={setRig} setErrors={setCompatibilityErrors}/>
+                <M2SSDTypeahead rig={rig} id={i} setRig={setRig} setErrors={setCompatibilityErrors} rewrite={rewrite} setRewrite={setRewrite}/>
             </div>);
     }
 
@@ -378,6 +380,21 @@ export function Configurator() {
             });
     }
 
+    const [filterState, setFilterState] = useState(false);
+
+    const renderFilterState = () => {
+        if(filterState){
+            return <span className='text-success fw-bold'>ON</span>
+        }
+        else{
+            return <span className='text-danger fw-bold'>OFF</span>
+        }
+    }
+
+    const onFilterStateClick = () => {
+        setFilterState(!filterState);
+    }
+
     return (
         <>
             <MDBContainer fluid className='configurator-body'>
@@ -387,60 +404,65 @@ export function Configurator() {
                         <h1 className="text-white fw-bolder shadow-5-strong text-center mb-4 hide-caret">Configure your PC</h1>
 
                         <MDBCard className="bg-opacity-25 w-75 mx-auto rounded-3">
+                            <MDBCardHeader className='d-flex'>
+                                <h6 className='mt-1'>Compatibility Filter: {renderFilterState()}</h6>
+
+                                <Button className='rounded-0 btn-outline-primary end-0 position-absolute top-0 me-1 mt-1' variant='outline-primary' size='sm' onClick={onFilterStateClick}>Toggle Filter</Button>
+                            </MDBCardHeader>
                             <ErrorsDisplay className="p-4" errors={errors}/>
                             <ErrorsDisplay message={'Incompatibility detected!'} className="p-4"
                                            errors={compatibilityErrors}/>
                             <Form onSubmit={onFormSubmit}>
                                 <MDBCardBody className='px-4'>
 
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select Case</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select Case</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <CaseCarouselSelect rig={rig} setRig={setRig}/>
+                                        <MDBCol className='mt-2 px-3 px-md-5 col-12'>
                                             <PcCaseTypeahead className={pcCaseValidCSS} rig={rig} setRig={setRig}
                                                              setErrors={setCompatibilityErrors}/>
-
                                         </MDBCol>
                                     </MDBRow>
 
                                     <hr className="mx-n3"/>
 
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select CPU</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select CPU</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             <CpuTypeahead className={cpuValidCSS} rig={rig} setRig={setRig}
                                                           setErrors={setCompatibilityErrors}/>
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
 
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select GPU</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select GPU</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             <GpuTypeahead className={gpuValidCSS} rig={rig} setRig={setRig}
                                                           setErrors={setCompatibilityErrors}/>
 
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select RAM</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5 className='text-center'>Select RAM</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             {renderRamComponents()}
                                             <Button className='py-1 px-3 me-2 rounded-0' size='sm' variant='success'
                                                     onClick={onAddRamComponent}>Add</Button>
@@ -448,64 +470,64 @@ export function Configurator() {
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select Motherboard</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select Motherboard</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             <MotherboardTypeahead className={motherboardValidCSS} rig={rig}
                                                                   setRig={setRig} setErrors={setCompatibilityErrors}/>
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select Liquid Cooler</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select Liquid Cooler</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             <LiquidCoolerTypeahead className={liquidCoolerValidCSS} rig={rig}
                                                                    setRig={setRig} setErrors={setCompatibilityErrors}/>
 
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select Air Cooler</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select Air Cooler</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             <AirCoolerTypeahead className={airCoolerValidCSS} rig={rig} setRig={setRig}
                                                                 setErrors={setCompatibilityErrors}/>
 
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select PSU</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select PSU</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             <PowerSupplyTypeahead className={psuValidCSS} rig={rig} setRig={setRig}
                                                                   setErrors={setCompatibilityErrors}/>
 
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select HDD</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select HDD</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             {renderHddComponents()}
                                             <Button className='py-1 px-3 me-2 rounded-0' size='sm' variant='success'
                                                     onClick={onAddHddComponent}>Add</Button>
@@ -513,13 +535,13 @@ export function Configurator() {
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select Sata SSD</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select Sata SSD</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             {renderSataSSDComponents()}
                                             <Button className='py-1 px-3 me-2 rounded-0' size='sm' variant='success'
                                                     onClick={onAddSataSSDComponent}>Add</Button>
@@ -527,13 +549,13 @@ export function Configurator() {
                                         </MDBCol>
                                     </MDBRow>
                                     <hr className="mx-n3"/>
-                                    <MDBRow className='align-items-center justify-content-center text-center text-lg-start pt-4 pb-3'>
+                                    <MDBRow className='align-items-center justify-content-center text-center pt-4 pb-3'>
 
-                                        <MDBCol className='ps-5 col-12 col-lg-3'>
-                                            <h6 className="mb-lg-0 responsive-part-name">Select M2 SSD</h6>
+                                        <MDBCol className='col-10 text-center'>
+                                            <h5>Select M2 SSD</h5>
                                         </MDBCol>
 
-                                        <MDBCol className='pe-lg-5 col-12 col-md-10 col-lg-9'>
+                                        <MDBCol className='px-3 px-md-5 col-12'>
                                             {renderM2SSDComponents()}
                                             <Button className='py-1 px-3 me-2 rounded-0' size='sm' variant='success'
                                                     onClick={onAddM2SSDComponent}>Add</Button>
@@ -545,7 +567,6 @@ export function Configurator() {
                                     <div className='text-center'>
                                         <Button variant="success" type="submit" className='my-4 border rounded-0' size='lg'>Check Configuration</Button>
                                     </div>
-
 
                                 </MDBCardBody>
                             </Form>

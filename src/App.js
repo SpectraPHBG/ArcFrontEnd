@@ -24,6 +24,7 @@ import {AutoConfigurator} from "./pages/auto-configurator";
 import {VerifiedEmail} from "./pages/verified-email";
 import {SaveConfig} from "./pages/save-config";
 import {SavedConfigs} from "./pages/saved-configs";
+import {Tutorials} from "./pages/tutorials";
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/profile" element={<AuthProtection ><Profile/></AuthProtection>}/>
                     <Route path="/config-selector" element={<ConfiguratorSelect/>}/>
                     <Route path="/email-verified" element={<VerifiedEmail/>}/>
+                    <Route path="/tutorials" element={<Tutorials/>}/>
                     <Route path="/save-config" element={<AuthProtection ><SaveConfig/></AuthProtection>}/>
                     <Route path="/configs" element={<AuthProtection ><SavedConfigs/></AuthProtection>}/>
                     <Route path="/configurator" element={<Configurator/>}/>

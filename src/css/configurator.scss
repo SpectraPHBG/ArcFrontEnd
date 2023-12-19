@@ -9,6 +9,21 @@
   caret-color: transparent;
 }
 
+.custom-selected {
+  white-space: normal; /* Allow text to wrap */
+  word-wrap: break-word; /* Allow word wrapping */
+  max-width: 200px; /* Limit the width of the selected item */
+}
+
+.custom-button{
+  height: 50px;
+}
+
+.configurator-icon {
+  width: 50px;
+  aspect-ratio: 1/1;
+}
+
 .rbt-aux {
   position: absolute;
   right: 6px;
@@ -23,12 +38,3 @@
   background-color: rgba(245, 245, 245, 0.9);
 }
 .card-header, .card-footer { opacity: 1}
-
-.responsive-part-name {
-  font-size: 24px;
-}
-@media (min-width: 992px) {
-  .responsive-part-name {
-    font-size: 16px;
-  }
-}

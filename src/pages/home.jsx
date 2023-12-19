@@ -6,12 +6,6 @@ import {RandomCPUCarousel} from "../components/RandomCPUCarousel";
 
 export default function Home(){
 
-    const tooltip = (
-        <Tooltip id="tooltip">
-            Coming Soon!
-        </Tooltip>
-    );
-
     return(
         <div className="home">
             <div className="top-greeter py-2 py-xl-4 ps-4">
@@ -25,11 +19,7 @@ export default function Home(){
                 </div>
                 <div className="ps-5 text-white row pb-5 mx-lg-0 justify-content-lg-start">
                     <Link className="col-5 col-md-3 ms-lg-3 col-lg-3 col-xl-2 col-xxl-2 btn btn-success rounded-0" to="/config-selector">PC Configurator</Link>
-                    <OverlayTrigger placement="right" overlay={tooltip} trigger={['hover', 'focus']}>
-                        <span className='col-5 col-md-3 col-lg-2 col-xl-2 col-xxl-2'>
-                            <Button className="ms-2 w-100 btn btn-dark border border-success border-2 disabled rounded-0">Tutorials</Button>
-                        </span>
-                    </OverlayTrigger>
+                    <Link className="col-5 col-md-3 col-lg-2 col-xl-2 col-xxl-2 ms-2 btn btn-dark border border-success border-2 rounded-0" to='/tutorials'>Tutorials</Link>
                 </div>
             </div>
             <RandomCPUCarousel brand={'Intel'}/>
